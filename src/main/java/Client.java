@@ -31,6 +31,9 @@ public class Client extends JFrame {
             if (cmd[0].equals("download")) {
                 getFile(cmd[1]);
             }
+            if (cmd[0].equals("exit")) {
+                sendMessage(cmd[0]);
+            }
         });
         panel.add(text);
         panel.add(send);
@@ -48,14 +51,52 @@ public class Client extends JFrame {
     }
 
     private void getFile(String fileName) {
-        // TODO: 27.10.2020
+        try {
+            out.writeUTF("download");
+            out.writeUTF(fileName);
+
+            if (in.readUTF().equals("NOT_EXIST"))
+            {
+                System.out.println("File is not exists on server");
+                return;
+            }
+
+            File file = new File("client/" + fileName);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            long size = in.readLong();
+            FileOutputStream fos = new FileOutputStream(file);
+            byte[] buffer = new byte[256];
+            for (int i = 0; i < (size + 255) / 256; i++) {
+                int read = in.read(buffer);
+                fos.write(buffer, 0, read);
+            }
+            fos.close();
+            out.writeUTF("OK");
+            System.out.println("File is downloaded");
+        } catch (Exception e) {
+            try {
+                out.writeUTF("WRONG");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     private void sendFile(String filename) {
         try {
+            File file = new File("client/" + filename);
+            if (!file.exists())
+            {
+                System.out.println("File is not exists on server");
+                return;
+            }
+
             out.writeUTF("upload");
             out.writeUTF(filename);
-            File file = new File("client/" + filename);
+
             long length = file.length();
             out.writeLong(length);
             FileInputStream fileBytes = new FileInputStream(file);
@@ -67,6 +108,7 @@ public class Client extends JFrame {
             out.flush();
             String status = in.readUTF();
             System.out.println(status);
+            System.out.println("File is uploaded");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,6 +118,7 @@ public class Client extends JFrame {
         try {
             out.writeUTF(text);
             System.out.println(in.readUTF());
+            System.out.println("Client exited");
         } catch (IOException e) {
             e.printStackTrace();
         }

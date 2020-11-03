@@ -1,8 +1,5 @@
 import javax.security.sasl.SaslException;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -21,6 +18,7 @@ public class ClientHandler implements Runnable {
         ) {
             while (true) {
                 String command = in.readUTF();
+                System.out.println(command);
                 if (command.equals("upload")) {
                     try {
                         File file = new File("server/" + in.readUTF());
@@ -41,15 +39,34 @@ public class ClientHandler implements Runnable {
                     }
                 }
                 if (command.equals("download")) {
-                    // TODO: 27.10.2020
-                    //Я извиняюсь, но допишу позднее
+                    try {
+                        File file = new File("server/" + in.readUTF());
+                        if (!file.exists()){
+                            out.writeUTF("NOT_EXIST");
+                            return;
+                        }
+                        out.writeUTF("OK");
+                        long length = file.length();
+                        out.writeLong(length);
+
+                        FileInputStream fileBytes = new FileInputStream(file);
+                        int read = 0;
+                        byte[] buffer = new byte[256];
+                        while ((read = fileBytes.read(buffer)) != -1) {
+                            out.write(buffer, 0, read);
+                        }
+                        out.flush();
+                        String status = in.readUTF();
+                        System.out.println(status);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (command.equals("exit")) {
                     System.out.println("Client disconnected correctly");
                     out.writeUTF("OK");
                     break;
                 }
-                System.out.println(command);
             }
 
         } catch (SocketException socketException) {
