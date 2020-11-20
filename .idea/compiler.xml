@@ -9,5 +9,9 @@
         <module name="CloudStorageOct" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="client" target="14" />
+      <module name="server" target="14" />
+    </bytecodeTargetLevel>
   </component>
 </project>

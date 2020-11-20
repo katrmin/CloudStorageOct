@@ -5,7 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.geekbrains</groupId>
-    <artifactId>CloudStorageOct</artifactId>
+    <artifactId>CloudStorage</artifactId>
+    <packaging>pom</packaging>
     <version>1</version>
 
     <build>
@@ -21,5 +22,9 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>server</module>
+        <module>client</module>
+    </modules>
 
 </project>
