@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="center" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.geekbrains.ui.Controller">
+   <SplitPane dividerPositions="0.5275689223057645" prefHeight="600.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+     <items>
+       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
+            <children>
+                <HBox prefHeight="100.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+                  <Label alignment="TOP_CENTER" text="Client" VBox.vgrow="ALWAYS" />
+               <ListView layoutX="88.0" layoutY="216.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="800.0" prefWidth="300.0" VBox.vgrow="ALWAYS" />
+                </HBox>
+            </children>
+         </AnchorPane>
+       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="400.0" VBox.vgrow="ALWAYS">
+            <children>
+                <!--<HBox prefHeight="100.0" prefWidth="800.0" VBox.vgrow="ALWAYS" >-->
+                  <Label alignment="BASELINE_CENTER" text="Server" />
+               <ListView layoutX="98.0" layoutY="217.0" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                <!--</HBox>-->
+            </children>
+         </AnchorPane>
+     </items>
+   </SplitPane>
+
+
+
+</VBox>

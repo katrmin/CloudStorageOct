@@ -10,13 +10,13 @@ import java.net.Socket;
  *
  * @author user
  * */
-public class Client extends JFrame {
+public class Client_old extends JFrame {
 
     private final Socket socket;
     private final DataInputStream in;
     private final DataOutputStream out;
 
-    public Client() throws HeadlessException, IOException {
+    public Client_old() throws HeadlessException, IOException {
         socket = new Socket("localhost", 8189);
         out = new DataOutputStream(socket.getOutputStream());
         in = new DataInputStream(socket.getInputStream());
@@ -34,15 +34,15 @@ public class Client extends JFrame {
             }
             try {
                 out.write(text.getText().getBytes());
-                new Thread(() ->
-                {
-                    try {
-                        System.out.println(new String(in.readAllBytes()));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                ).start();
+//                new Thread(() ->
+//                {
+//                    try {
+//                       System.out.println(new String(in.readAllBytes()));
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                ).start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -97,6 +97,6 @@ public class Client extends JFrame {
     }
 
     public static void main(String[] args) throws IOException {
-        new Client();
+        new Client_old();
     }
 }
